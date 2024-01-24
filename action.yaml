@@ -21,10 +21,10 @@ inputs:
   path:
     description: 'Secrets path inside the environment.'
     required: false
-  format:
-    description: 'Output format.'
-    required: false
-    default: 'dotenv'
+#  format:
+#    description: 'Output format.'
+#    required: false
+#    default: 'dotenv'
   destinationFile:
     description: 'Destination file.'
     required: false

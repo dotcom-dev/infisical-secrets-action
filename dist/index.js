@@ -8261,15 +8261,28 @@ exports.Infisical = Infisical;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createSecret = void 0;
+const fs = __nccwpck_require__(7147);
 const exec_1 = __nccwpck_require__(1514);
+const getObjectFromJsonFile = (fileName) => {
+    const jsonString = fs.readFileSync(fileName, 'utf8');
+    return JSON.parse(jsonString);
+};
+/**
+ * Create a Kubernetes secret from a JSON file
+ *
+ * @param name
+ * @param fileName
+ * @param namespace
+ */
 const createSecret = async (name, fileName, namespace) => {
+    const jsObject = getObjectFromJsonFile(fileName);
     await (0, exec_1.exec)('kubectl', [
         'create',
         'secret',
         'generic',
         name,
         ...(namespace ? [`--namespace=${namespace}`] : []),
-        `--from-env-file=${fileName}`,
+        ...jsObject.map((item) => `--from-literal=${item.key}=${item.value}`),
     ]);
 };
 exports.createSecret = createSecret;
@@ -8618,8 +8631,8 @@ const main = async () => {
     const projectId = (0, core_1.getInput)('projectId', { required: true });
     const environment = (0, core_1.getInput)('env', { required: true });
     const path = (0, core_1.getInput)('path', { required: false });
-    // const format = getInput('format', { required: false }) ?? 'dotenv';
-    const destinationFile = (0, core_1.getInput)('destinationFile', { required: false }) ?? '.env';
+    const format = 'json'; // Maybe later: getInput('format', { required: false })
+    const destinationFile = (0, core_1.getInput)('destinationFile', { required: false }) ?? 'secrets.json';
     const kubernetes = String((0, core_1.getInput)('kubernetes', { required: false })) === 'true';
     const kubernetesSecretName = (0, core_1.getInput)('kubernetesSecretName', {
         required: false,
@@ -8634,7 +8647,7 @@ const main = async () => {
         `--projectId=${projectId}`,
         `--env=${environment}`,
         ...(path ? [`--path=${path}`] : []),
-        // `--format=${format}`,
+        `--format=${format}`,
         `> ${destinationFile}`,
     ]);
     if (kubernetes) {

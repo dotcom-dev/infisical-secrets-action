@@ -11,9 +11,9 @@ const main = async (): Promise<void> => {
   const projectId = getInput('projectId', { required: true });
   const environment = getInput('env', { required: true });
   const path = getInput('path', { required: false });
-  // const format = getInput('format', { required: false }) ?? 'dotenv';
+  const format = 'json'; // Maybe later: getInput('format', { required: false })
   const destinationFile =
-    getInput('destinationFile', { required: false }) ?? '.env';
+    getInput('destinationFile', { required: false }) ?? 'secrets.json';
   const kubernetes =
     String(getInput('kubernetes', { required: false })) === 'true';
   const kubernetesSecretName = getInput('kubernetesSecretName', {
@@ -30,7 +30,7 @@ const main = async (): Promise<void> => {
     `--projectId=${projectId}`,
     `--env=${environment}`,
     ...(path ? [`--path=${path}`] : []),
-    // `--format=${format}`,
+    `--format=${format}`,
     `> ${destinationFile}`,
   ]);
 
