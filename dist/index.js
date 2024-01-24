@@ -8291,7 +8291,7 @@ data:
 const upsertSecret = async (name, fileName, namespace) => {
     const secretData = getObjectFromJsonFile(fileName);
     const yamlContent = createSecretYaml(name, namespace, secretData);
-    console.log('yamlContent', yamlContent);
+    console.log('yamlContent1111', yamlContent);
     const tempFilePath = 'temp-secret.yaml';
     fs.writeFileSync(tempFilePath, yamlContent);
     await (0, exec_1.exec)('kubectl', ['apply', '-f', tempFilePath]);
