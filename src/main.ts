@@ -1,7 +1,7 @@
 import { getInput } from '@actions/core';
 
 import { Infisical } from './infisical';
-import { createSecret } from './kubernetes';
+import { upsertSecret } from './kubernetes';
 
 const main = async (): Promise<void> => {
   const infisical = await Infisical.create();
@@ -41,7 +41,7 @@ const main = async (): Promise<void> => {
       );
     }
 
-    await createSecret(
+    await upsertSecret(
       kubernetesSecretName,
       destinationFile,
       kubernetesNamespace

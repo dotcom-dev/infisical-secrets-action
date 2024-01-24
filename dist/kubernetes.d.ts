@@ -1,8 +1,8 @@
 /**
- * Create a Kubernetes secret from a JSON file
+ * Upsert a Kubernetes secret from a JSON file
  *
- * @param name
- * @param fileName
- * @param namespace
+ * @param name The name of the secret
+ * @param fileName The path to the JSON file
+ * @param namespace The namespace for the secret (optional)
  */
-export declare const createSecret: (name: string, fileName: string, namespace?: string) => Promise<void>;
+export declare const upsertSecret: (name: string, fileName: string, namespace?: string) => Promise<void>;

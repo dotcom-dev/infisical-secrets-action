@@ -8260,32 +8260,44 @@ exports.Infisical = Infisical;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createSecret = void 0;
+exports.upsertSecret = void 0;
 const fs = __nccwpck_require__(7147);
 const exec_1 = __nccwpck_require__(1514);
 const getObjectFromJsonFile = (fileName) => {
     const jsonString = fs.readFileSync(fileName, 'utf8');
     return JSON.parse(jsonString);
 };
-/**
- * Create a Kubernetes secret from a JSON file
- *
- * @param name
- * @param fileName
- * @param namespace
- */
-const createSecret = async (name, fileName, namespace) => {
-    const jsObject = getObjectFromJsonFile(fileName);
-    await (0, exec_1.exec)('kubectl', [
-        'create',
-        'secret',
-        'generic',
-        name,
-        ...(namespace ? [`--namespace=${namespace}`] : []),
-        ...jsObject.map((item) => `--from-literal=${item.key}=${item.value}`),
-    ]);
+const createSecretYaml = (name, namespace, secrets) => {
+    const base64Data = secrets
+        .map(({ key, value }) => `${key}: ${Buffer.from(value).toString('base64')}`)
+        .join('\n');
+    return `apiVersion: v1
+kind: Secret
+metadata:
+  name: ${name}
+  ${namespace ? `namespace: ${namespace}` : ''}
+type: Opaque
+data:
+  ${base64Data}
+`;
 };
-exports.createSecret = createSecret;
+/**
+ * Upsert a Kubernetes secret from a JSON file
+ *
+ * @param name The name of the secret
+ * @param fileName The path to the JSON file
+ * @param namespace The namespace for the secret (optional)
+ */
+const upsertSecret = async (name, fileName, namespace) => {
+    const secretData = getObjectFromJsonFile(fileName);
+    const yamlContent = createSecretYaml(name, namespace, secretData);
+    const tempFilePath = 'temp-secret.yaml';
+    fs.writeFileSync(tempFilePath, yamlContent);
+    await (0, exec_1.exec)('kubectl', ['apply', '-f', tempFilePath]);
+    // Delete the temporary file after applying
+    fs.unlinkSync(tempFilePath);
+};
+exports.upsertSecret = upsertSecret;
 
 
 /***/ }),
@@ -8654,7 +8666,7 @@ const main = async () => {
         if (!kubernetesSecretName.length) {
             throw new Error('"kubernetes" is enabled but "kubernetesSecretName" is not set');
         }
-        await (0, kubernetes_1.createSecret)(kubernetesSecretName, destinationFile, kubernetesNamespace);
+        await (0, kubernetes_1.upsertSecret)(kubernetesSecretName, destinationFile, kubernetesNamespace);
     }
     console.log('✨ Done');
 };

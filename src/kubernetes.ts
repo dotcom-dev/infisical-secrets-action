@@ -9,26 +9,45 @@ const getObjectFromJsonFile = (
   return JSON.parse(jsonString);
 };
 
+const createSecretYaml = (
+  name: string,
+  namespace: string | undefined,
+  secrets: { key: string; value: string }[]
+): string => {
+  const base64Data = secrets
+    .map(({ key, value }) => `${key}: ${Buffer.from(value).toString('base64')}`)
+    .join('\n');
+
+  return `apiVersion: v1
+kind: Secret
+metadata:
+  name: ${name}
+  ${namespace ? `namespace: ${namespace}` : ''}
+type: Opaque
+data:
+  ${base64Data}
+`;
+};
+
 /**
- * Create a Kubernetes secret from a JSON file
+ * Upsert a Kubernetes secret from a JSON file
  *
- * @param name
- * @param fileName
- * @param namespace
+ * @param name The name of the secret
+ * @param fileName The path to the JSON file
+ * @param namespace The namespace for the secret (optional)
  */
-export const createSecret = async (
+export const upsertSecret = async (
   name: string,
   fileName: string,
   namespace?: string
 ) => {
-  const jsObject = getObjectFromJsonFile(fileName);
+  const secretData = getObjectFromJsonFile(fileName);
+  const yamlContent = createSecretYaml(name, namespace, secretData);
+  const tempFilePath = 'temp-secret.yaml';
+  fs.writeFileSync(tempFilePath, yamlContent);
 
-  await exec('kubectl', [
-    'create',
-    'secret',
-    'generic',
-    name,
-    ...(namespace ? [`--namespace=${namespace}`] : []),
-    ...jsObject.map((item) => `--from-literal=${item.key}=${item.value}`),
-  ]);
+  await exec('kubectl', ['apply', '-f', tempFilePath]);
+
+  // Delete the temporary file after applying
+  fs.unlinkSync(tempFilePath);
 };
