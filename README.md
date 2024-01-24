@@ -2,7 +2,7 @@
 
 Helps you retrieve secrets from [Infisical](https://infisical.com) and deploy them to your Kubernetes cluster.
 
-Behind the scenes we are installing the Infisical CLI and using it to retrieve the secrets. All the secrets are then piped into the file specified in the `destinationFile` parameter, default: `.env`, in the `dotenv` format.
+Behind the scenes we are installing the Infisical CLI and using it to retrieve the secrets. All the secrets are then piped into the file specified in the `destinationFile` parameter, default: `secrets.json`, in the `json` format.
 
 ## Usage
 
