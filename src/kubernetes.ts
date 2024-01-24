@@ -43,6 +43,9 @@ export const upsertSecret = async (
 ) => {
   const secretData = getObjectFromJsonFile(fileName);
   const yamlContent = createSecretYaml(name, namespace, secretData);
+
+  console.log('yamlContent', yamlContent);
+
   const tempFilePath = 'temp-secret.yaml';
   fs.writeFileSync(tempFilePath, yamlContent);
 
