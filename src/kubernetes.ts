@@ -15,7 +15,9 @@ const createSecretYaml = (
   secrets: { key: string; value: string }[]
 ): string => {
   const base64Data = secrets
-    .map(({ key, value }) => `${key}: ${Buffer.from(value).toString('base64')}`)
+    .map(
+      ({ key, value }) => `  ${key}: ${Buffer.from(value).toString('base64')}`
+    )
     .join('\n');
 
   return `apiVersion: v1
@@ -25,7 +27,7 @@ metadata:
   ${namespace ? `namespace: ${namespace}` : ''}
 type: Opaque
 data:
-  ${base64Data}
+${base64Data}
 `;
 };
 
