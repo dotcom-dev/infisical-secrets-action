@@ -8254,6 +8254,29 @@ exports.Infisical = Infisical;
 
 /***/ }),
 
+/***/ 7830:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createSecret = void 0;
+const exec_1 = __nccwpck_require__(1514);
+const createSecret = async (name, fileName, namespace) => {
+    await (0, exec_1.exec)("kubectl", [
+        "create",
+        "secret",
+        "generic",
+        name,
+        ...(namespace ? [`-n ${namespace}`] : []),
+        `--from-env-file=${fileName}`,
+    ]);
+};
+exports.createSecret = createSecret;
+
+
+/***/ }),
+
 /***/ 390:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -8587,7 +8610,7 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __nccwpck_require__(2186);
 const infisical_1 = __nccwpck_require__(194);
-const fs_1 = __nccwpck_require__(1716);
+const kubernetes_1 = __nccwpck_require__(7830);
 const main = async () => {
     const infisical = await infisical_1.Infisical.create();
     const domain = (0, core_1.getInput)('domain', { required: false });
@@ -8595,19 +8618,27 @@ const main = async () => {
     const projectId = (0, core_1.getInput)('projectId', { required: true });
     const environment = (0, core_1.getInput)('env', { required: true });
     const path = (0, core_1.getInput)('path', { required: false });
-    const format = (0, core_1.getInput)('format', { required: false }) ?? 'dotenv';
+    // const format = getInput('format', { required: false }) ?? 'dotenv';
     const destinationFile = (0, core_1.getInput)('destinationFile', { required: false }) ?? '.env';
-    const output = await infisical.exec([
+    const kubernetes = String((0, core_1.getInput)('kubernetes', { required: false })) === 'true';
+    const kubernetesSecretName = (0, core_1.getInput)('kubernetesSecretName', { required: false });
+    const kubernetesSecretNamespace = (0, core_1.getInput)('kubernetesSecretNamespace', { required: false });
+    await infisical.exec([
         'export',
         `--domain=${domain}`,
         `--token=${token}`,
         `--projectId=${projectId}`,
         `--env=${environment}`,
         ...(path ? [`--path=${path}`] : []),
-        `--format=${format}`,
+        // `--format=${format}`,
         `> ${destinationFile}`,
     ]);
-    await (0, fs_1.writeToFile)(destinationFile, output);
+    if (kubernetes) {
+        if (!kubernetesSecretName.length) {
+            throw new Error('"kubernetes" is enabled but "kubernetesSecretName" is not set');
+        }
+        await (0, kubernetes_1.createSecret)(kubernetesSecretName, destinationFile, kubernetesSecretNamespace);
+    }
     console.log('✨ Done');
 };
 void main();

@@ -2,7 +2,7 @@
 
 Helps you retrieve secrets from [Infisical](https://infisical.com) and deploy them to your Kubernetes cluster.
 
-Behind the scenes we are installing the Infisical CLI and using it to retrieve the secrets. All the secrets are then piped into the file specified in the `destinationFile` parameter - default: `.env`.
+Behind the scenes we are installing the Infisical CLI and using it to retrieve the secrets. All the secrets are then piped into the file specified in the `destinationFile` parameter, default: `.env`, in the `dotenv` format.
 
 ## Usage
 
@@ -22,14 +22,16 @@ jobs:
 
 ### Parameters
 
-| Parameter         | Description                                                                                               | Default    |
-|-------------------|-----------------------------------------------------------------------------------------------------------|------------|
-| `domain`          | Infisical API domain. Helpful for self-hosted deployments, if not provided, will use the official domain. | `Official` |
-| `token`           | Your Infisical API token.                                                                                 |            |
-| `projectId`       | The ID of the project you want to retrieve secrets from.                                                  |            |
-| `env`             | The environment you want to retrieve secrets from.                                                        |            |
-| `path`            | Secrets path inside the environment.                                                                      | /          |
-| `format`          | The format of the secrets file.                                                                           | `dotenv`   |
-| `destinationFile` | The file you want to write the secrets to.                                                                | `.env`     |
+| Parameter              | Description                                                                                               | Default    |
+|------------------------|-----------------------------------------------------------------------------------------------------------|------------|
+| `domain`               | Infisical API domain. Helpful for self-hosted deployments, if not provided, will use the official domain. | `Official` |
+| `token`                | Your Infisical API token.                                                                                 |            |
+| `projectId`            | The ID of the project you want to retrieve secrets from.                                                  |            |
+| `env`                  | The environment you want to retrieve secrets from.                                                        |            |
+| `path`                 | Secrets path inside the environment.                                                                      | /          |
+| `destinationFile`      | The file you want to write the secrets to.                                                                | `.env`     |
+| `kubernetes`           | Whether to deploy the secrets to Kubernetes.                                                              | `false`    |
+| `kubernetesSecretName` | The name of the Kubernetes secret. (Required if `kubernetes` is `true`)                                   |            |
+| `kubernetesNamespace`  | The namespace of the Kubernetes secret.                                                                   |            |
 
 > **Note:** This action is currently in beta. Please use it with caution and at your own risk.

@@ -29,6 +29,16 @@ inputs:
     description: 'Destination file.'
     required: false
     default: '.env'
+  kubernetes:
+    description: 'Should the action generate a Kubernetes secret? ("kubectl" command and context must be available)'
+    required: false
+    default: 'false'
+  kubernetesSecretName:
+    description: 'Kubernetes secret name. (Required if "kubernetes" is true)'
+    required: false
+  kubernetesSecretNamespace:
+    description: 'Kubernetes secret namespace.'
+    required: false
 
 runs:
   using: 'node20'
