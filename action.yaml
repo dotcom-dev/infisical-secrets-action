@@ -1,0 +1,35 @@
+name: 'Infisical Secrets'
+description: 'Use Infisical in your GitHub Actions workflow'
+
+branding:
+  icon: 'anchor'
+  color: 'blue'
+
+inputs:
+  domain:
+    description: 'Infisical API domain. Helpful for self-hosted deployments, if not provided, will use the official domain.'
+    required: false
+  token:
+    description: 'Infisical API token. (Required)'
+    required: true
+  projectId:
+    description: 'Infisical project ID. (Required)'
+    required: true
+  env:
+    description: 'Environment slug. (Required)'
+    required: true
+  path:
+    description: 'Secrets path inside the environment.'
+    required: false
+  format:
+    description: 'Output format.'
+    required: false
+    default: 'dotenv'
+  destinationFile:
+    description: 'Destination file.'
+    required: false
+    default: '.env'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
