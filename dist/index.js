@@ -8263,12 +8263,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createSecret = void 0;
 const exec_1 = __nccwpck_require__(1514);
 const createSecret = async (name, fileName, namespace) => {
-    await (0, exec_1.exec)("kubectl", [
-        "create",
-        "secret",
-        "generic",
+    await (0, exec_1.exec)('kubectl', [
+        'create',
+        'secret',
+        'generic',
         name,
-        ...(namespace ? [`-n ${namespace}`] : []),
+        ...(namespace ? [`--namespace=${namespace}`] : []),
         `--from-env-file=${fileName}`,
     ]);
 };
