@@ -8621,8 +8621,12 @@ const main = async () => {
     // const format = getInput('format', { required: false }) ?? 'dotenv';
     const destinationFile = (0, core_1.getInput)('destinationFile', { required: false }) ?? '.env';
     const kubernetes = String((0, core_1.getInput)('kubernetes', { required: false })) === 'true';
-    const kubernetesSecretName = (0, core_1.getInput)('kubernetesSecretName', { required: false });
-    const kubernetesSecretNamespace = (0, core_1.getInput)('kubernetesSecretNamespace', { required: false });
+    const kubernetesSecretName = (0, core_1.getInput)('kubernetesSecretName', {
+        required: false,
+    });
+    const kubernetesNamespace = (0, core_1.getInput)('kubernetesNamespace', {
+        required: false,
+    });
     await infisical.exec([
         'export',
         `--domain=${domain}`,
@@ -8637,7 +8641,7 @@ const main = async () => {
         if (!kubernetesSecretName.length) {
             throw new Error('"kubernetes" is enabled but "kubernetesSecretName" is not set');
         }
-        await (0, kubernetes_1.createSecret)(kubernetesSecretName, destinationFile, kubernetesSecretNamespace);
+        await (0, kubernetes_1.createSecret)(kubernetesSecretName, destinationFile, kubernetesNamespace);
     }
     console.log('✨ Done');
 };

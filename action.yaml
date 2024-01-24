@@ -36,7 +36,7 @@ inputs:
   kubernetesSecretName:
     description: 'Kubernetes secret name. (Required if "kubernetes" is true)'
     required: false
-  kubernetesSecretNamespace:
+  kubernetesNamespace:
     description: 'Kubernetes secret namespace.'
     required: false
 
