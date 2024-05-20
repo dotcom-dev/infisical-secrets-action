@@ -35,3 +35,10 @@ jobs:
 | `kubernetesNamespace`  | The namespace of the Kubernetes secret.                                                                   |            |
 
 > **Note:** This action is currently in beta. Please use it with caution and at your own risk.
+
+## Development
+
+1. Adjust the code and then.
+2. Build with `yarn build`
+3. Update the version in the `package.json` file.
+4. Commit the changes and push to the repository.
