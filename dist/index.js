@@ -8193,13 +8193,10 @@ const SystemMap_1 = __nccwpck_require__(390);
 const fs_1 = __nccwpck_require__(1716);
 const system_1 = __nccwpck_require__(996);
 const toolName = 'infisical';
-const defaultVersion = '0.16.10';
+const defaultVersion = '0.31.1';
 const downloadLinks = new SystemMap_1.SystemMap({
     [SystemMap_1.SystemType.Linux]: {
-        [SystemMap_1.SystemArch.X64]: 
-        // 'https://dl.cloudsmith.io/public/infisical/infisical-cli/deb/any-distro/pool/any-version/main/i/in/infisical_%s/infisical_%s_linux_amd64.deb',
-        // 'https://dl.cloudsmith.io/public/infisical/infisical-cli/deb/any-distro/pool/any-version/main/i/in/infisical_0.22.2/infisical_0.22.2_linux_arm64.deb',
-        'https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv%s/infisical_%s_linux_amd64.deb',
+        [SystemMap_1.SystemArch.X64]: 'https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv%s/infisical_%s_linux_amd64.deb',
     },
 });
 const getDownloadUrl = (version) => {

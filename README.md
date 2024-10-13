@@ -40,5 +40,7 @@ jobs:
 
 1. Adjust the code and then.
 2. Build with `yarn build`
-3. Update the version in the `package.json` file.
-4. Commit the changes and push to the repository.
+3. Commit the changes 
+4. Update the version in the `package.json` file and commit the change with the message `vX.Y.Z`
+5. Push the changes to the repository
+6. Create a new release with the tag `vX.Y.Z` and the release notes
