@@ -21,14 +21,12 @@ inputs:
   path:
     description: 'Secrets path inside the environment.'
     required: false
-#  format:
-#    description: 'Output format.'
-#    required: false
-#    default: 'dotenv'
-  destinationFile:
-    description: 'Destination file.'
+  format:
+    description: 'Output format. (Default: json)'
     required: false
-    default: '.env'
+  destinationFile:
+    description: 'Destination file. (Default: secrets.json)'
+    required: false
   kubernetes:
     description: 'Should the action generate a Kubernetes secret? ("kubectl" command and context must be available)'
     required: false
