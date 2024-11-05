@@ -42,5 +42,6 @@ jobs:
 2. Build with `yarn build`
 3. Commit the changes 
 4. Update the version in the `package.json` file and commit the change with the message `vX.Y.Z`
-5. Push the changes to the repository
-6. Create a new release with the tag `vX.Y.Z` and the release notes
+5. Create a new tag with the version: `git tag -a vX.Y.Z -m vX.Y.Z`
+6. Push the changes to the repository
+7. Create a new release with the tag `vX.Y.Z` and the release notes
