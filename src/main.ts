@@ -11,7 +11,7 @@ const main = async (): Promise<void> => {
   const projectId = getInput('projectId', { required: true });
   const environment = getInput('env', { required: true });
   const path = getInput('path', { required: false });
-  const format = 'json'; // Maybe later: getInput('format', { required: false })
+  const format = getInput('format', { required: false }) ?? 'json';
   const destinationFile =
     getInput('destinationFile', { required: false }) ?? 'secrets.json';
   const kubernetes =
