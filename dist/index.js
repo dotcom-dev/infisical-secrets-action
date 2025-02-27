@@ -8644,8 +8644,8 @@ const main = async () => {
     const projectId = (0, core_1.getInput)('projectId', { required: true });
     const environment = (0, core_1.getInput)('env', { required: true });
     const path = (0, core_1.getInput)('path', { required: false });
-    const format = (0, core_1.getInput)('format', { required: false }) ?? 'json';
-    const destinationFile = (0, core_1.getInput)('destinationFile', { required: false }) ?? 'secrets.json';
+    const format = (0, core_1.getInput)('format', { required: false }) || 'json';
+    const destinationFile = (0, core_1.getInput)('destinationFile', { required: false }) || 'secrets.json';
     const kubernetes = String((0, core_1.getInput)('kubernetes', { required: false })) === 'true';
     const kubernetesSecretName = (0, core_1.getInput)('kubernetesSecretName', {
         required: false,
