@@ -8193,7 +8193,7 @@ const SystemMap_1 = __nccwpck_require__(390);
 const fs_1 = __nccwpck_require__(1716);
 const system_1 = __nccwpck_require__(996);
 const toolName = 'infisical';
-const defaultVersion = '0.31.1';
+const defaultVersion = '0.34.2';
 const downloadLinks = new SystemMap_1.SystemMap({
     [SystemMap_1.SystemType.Linux]: {
         [SystemMap_1.SystemArch.X64]: 'https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv%s/infisical_%s_linux_amd64.deb',
@@ -8222,7 +8222,7 @@ const obtainInfisicalCLI = async (version = defaultVersion) => {
             // Download the .deb package
             const filePath = await tc.downloadTool(downloadUrl);
             // Install the .deb package
-            await (0, exec_1.exec)('sudo', ['dpkg', '-i', filePath]);
+            await (0, exec_1.exec)('sudo', ['dpkg', '--no-triggers', '-i', filePath]);
             // Get the path to the executable
             const executablePath = await (0, fs_1.execCommand)('which', [toolName]).then((output) => output.replace(/\n$/, ''));
             cachedExecutableDirPath = await tc.cacheFile(executablePath, toolName, toolName, version);
