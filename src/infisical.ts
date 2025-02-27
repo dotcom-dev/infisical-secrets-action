@@ -53,7 +53,7 @@ export const obtainInfisicalCLI = async (
       const filePath = await tc.downloadTool(downloadUrl);
 
       // Install the .deb package
-      await exec('sudo', ['dpkg', '-i', filePath]);
+      await exec('sudo', ['dpkg', '--no-triggers', '-i', filePath]);
 
       // Get the path to the executable
       const executablePath = await execCommand('which', [toolName]).then(
