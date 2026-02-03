@@ -9,11 +9,13 @@ import { execCommand } from './utils/fs';
 import { getSystemInfo } from './utils/system';
 
 const toolName = 'infisical';
-const defaultVersion = '0.35.0';
+const defaultVersion = '0.43.50';
 const downloadLinks = new SystemMap({
   [SystemType.Linux]: {
     [SystemArch.X64]:
-      'https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv%s/infisical_%s_linux_amd64.deb',
+      'https://github.com/Infisical/cli/releases/download/v%s/infisical_%s_linux_amd64.deb',
+    [SystemArch.Arm64]:
+      'https://github.com/Infisical/cli/releases/download/v%s/infisical_%s_linux_arm64.deb',
   },
 });
 
