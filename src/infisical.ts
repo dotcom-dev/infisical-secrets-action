@@ -14,6 +14,8 @@ const downloadLinks = new SystemMap({
   [SystemType.Linux]: {
     [SystemArch.X64]:
       'https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv%s/infisical_%s_linux_amd64.deb',
+    [SystemArch.Arm64]:
+      'https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv%s/infisical_%s_linux_arm64.deb',
   },
 });
 
