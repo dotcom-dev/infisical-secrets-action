@@ -8193,7 +8193,7 @@ const SystemMap_1 = __nccwpck_require__(390);
 const fs_1 = __nccwpck_require__(1716);
 const system_1 = __nccwpck_require__(996);
 const toolName = 'infisical';
-const defaultVersion = '0.41.91';
+const defaultVersion = '0.43.50';
 const downloadLinks = new SystemMap_1.SystemMap({
     [SystemMap_1.SystemType.Linux]: {
         [SystemMap_1.SystemArch.X64]: 'https://github.com/Infisical/cli/releases/download/v%s/infisical_%s_linux_amd64.deb',

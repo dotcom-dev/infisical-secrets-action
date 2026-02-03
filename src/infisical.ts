@@ -9,7 +9,7 @@ import { execCommand } from './utils/fs';
 import { getSystemInfo } from './utils/system';
 
 const toolName = 'infisical';
-const defaultVersion = '0.41.91';
+const defaultVersion = '0.43.50';
 const downloadLinks = new SystemMap({
   [SystemType.Linux]: {
     [SystemArch.X64]:
