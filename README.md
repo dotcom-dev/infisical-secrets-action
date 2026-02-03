@@ -4,6 +4,8 @@ Helps you retrieve secrets from [Infisical](https://infisical.com) and deploy th
 
 Behind the scenes we are installing the Infisical CLI and using it to retrieve the secrets. All the secrets are then piped into the file specified in the `destinationFile` parameter, default: `secrets.json`, in the `json` format.
 
+**Platform Support:** Linux x64 (amd64) and arm64 runners. Other platforms can be added as needed.
+
 ## Usage
 
 ```yaml
